@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="V1\Order" />
+      <Folder Include="V1\OrderLine" />
+    </ItemGroup>
+
 </Project>
