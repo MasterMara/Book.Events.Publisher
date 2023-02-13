@@ -2,13 +2,13 @@
 
 public interface IBusSettings
 {
-    string ClusterName { get; set; }
-    string[] ClusterMembers { get; set; }
-    string Username { get; set; }
-    string Password { get; set; }
-    int Heartbeat { get; set; }
-    int PrefetchCount  { get; set; }
-    int ConcurrencyLimit  { get; set; }
-    bool AutoDelete { get; set; }
-    bool Durable { get; set; }
+    public string HostAddress { get; set; }
+    public string[] ClusterMembers { get; set; }
+    public string Username { get; set; }
+    public string Password { get; set; }
+    public ushort Heartbeat { get; set; }
+    public int PrefetchCount { get; set; }
+    public int ConcurrencyLimit { get; set; }
+    public bool AutoDelete { get; set; }
+    public bool Durable { get; set; }
 }
