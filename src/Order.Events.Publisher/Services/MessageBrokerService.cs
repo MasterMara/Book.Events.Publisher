@@ -11,8 +11,16 @@ public class MessageBrokerService : IMessageBrokerService
         _busControl = busControl;
     }
 
-    public Task Publish<TEvent>(TEvent @event, ConsumeContext context)
+    public async Task Publish<TEvent>(TEvent @event, Guid correlationId)
     {
-        throw new NotImplementedException();
+        void SetPublishContextParameters(PublishContext context)
+        {
+            context.ConversationId = correlationId;
+            
+            //Todo: Will set all the headers
+            context.Headers.Set("username", "MasterMara");
+        }
+
+        await _busControl.Publish(@event!, SetPublishContextParameters);
     }
 }

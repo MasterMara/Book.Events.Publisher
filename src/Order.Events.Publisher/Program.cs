@@ -57,6 +57,8 @@ public static class Program
                         ConfigureOrderLineExchanges(factoryConfigurator);
                     });
                 }));
+                
+                services.AddHostedService<Worker>();
             });
 
 
