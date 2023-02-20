@@ -7,6 +7,7 @@ using Order.Events.Publisher.Logging;
 using Order.Events.Publisher.Services;
 using Order.Events.Publisher.Settings;
 using Order.Events.Publisher.Settings.BusSettings;
+using Order.Events.V1.Order;
 using ExchangeType = RabbitMQ.Client.ExchangeType;
 
 namespace Order.Events.Publisher;
@@ -53,7 +54,6 @@ public static class Program
                             });
                         });
 
-                        ConfigureOrderExchanges(factoryConfigurator);
                         ConfigureOrderLineExchanges(factoryConfigurator);
                     });
                 }));
@@ -65,63 +65,44 @@ public static class Program
         await builder.Build().RunAsync();
     }
 
-    private static void ConfigureOrderExchanges(IRabbitMqBusFactoryConfigurator cfg)
-    {
-        #region Order.Events.V1.Order.Created
-
-        cfg.Send<Order.Events.V1.Order.Created>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat(c.Message)); });
-
-        cfg.Publish<Order.Events.V1.Order.Created>(x => x.ExchangeType = ExchangeType.Topic);
-
-        #endregion
-
-
-        #region Order.Events.V1.Order.Delivered
-
-        cfg.Send<Order.Events.V1.Order.Delivered>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat(c.Message)); });
-
-        cfg.Publish<Order.Events.V1.Order.Delivered>(x => x.ExchangeType = ExchangeType.Topic);
-
-        #endregion
-    }
 
     private static void ConfigureOrderLineExchanges(IRabbitMqBusFactoryConfigurator cfg)
     {
-        #region Order.Events.V1.Orderline.Created
+        #region Order.Events.V1.Order.Created
 
-        cfg.Send<V1.OrderLine.Created>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat(c.Message)); });
+        cfg.Send<Created>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
 
-        cfg.Publish<V1.OrderLine.Created>(x => x.ExchangeType = ExchangeType.Topic);
-
-        #endregion
-
-        #region Order.Events.V1.Orderline.InProgressed
-
-        cfg.Send<V1.OrderLine.InProgressed>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat(c.Message)); });
-
-        cfg.Publish<V1.OrderLine.InProgressed>(x => x.ExchangeType = ExchangeType.Topic);
+        cfg.Publish<Created>(x => x.ExchangeType = ExchangeType.Topic);
 
         #endregion
 
-        #region Order.Events.V1.Orderline.InTransitted
+        #region Order.Events.V1.Order.InProgressed
 
-        cfg.Send<V1.OrderLine.InTransitted>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat(c.Message)); });
+        cfg.Send<InProgressed>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
 
-        cfg.Publish<V1.OrderLine.InTransitted>(x => x.ExchangeType = ExchangeType.Topic);
+        cfg.Publish<InProgressed>(x => x.ExchangeType = ExchangeType.Topic);
 
         #endregion
 
-        #region Order.Events.V1.Orderline.Delivered
+        #region Order.Events.V1.Order.InTransitted
 
-        cfg.Send<V1.OrderLine.Delivered>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat(c.Message)); });
+        cfg.Send<InTransitted>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
 
-        cfg.Publish<V1.OrderLine.Delivered>(x => x.ExchangeType = ExchangeType.Topic);
+        cfg.Publish<InTransitted>(x => x.ExchangeType = ExchangeType.Topic);
+
+        #endregion
+
+        #region Order.Events.V1.Order.Delivered
+
+        cfg.Send<Delivered>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
+
+        cfg.Publish<Delivered>(x => x.ExchangeType = ExchangeType.Topic);
 
         #endregion
     }
 
-    private static string RoutingKeyFormat(dynamic message)
+    private static string RoutingKeyFormat()
     {
-        return $"Oms.{message.Id}";
+        return $"Order.Master.*";
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Order.Events.V1.OrderLine.Props;
+﻿namespace Order.Events.V1.Order.Props;
 
 public class Merchant
 {

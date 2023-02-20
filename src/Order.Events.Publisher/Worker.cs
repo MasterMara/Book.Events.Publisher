@@ -33,21 +33,55 @@ public class Worker : BackgroundService
 
         var i = 0;
 
-        while (i < 20)
+        while (i < 1)
         {
             try
             {
-                var orderDelivered = new Delivered
+                var orderCreated = new Created
                 {
-                    Id = "123456",
-                    Version = 2,
-                    OrderNumber = "132456",
-                    DeliveredBy = "Mustafa Karacabey"
+                    Id = Guid.NewGuid(),
+                    Version = 1,
+                    OrderNumber = "123456",
+                    Status = "Created"
                 };
+                
+                var orderInProgressed = new InProgressed()
+                {
+                    Id = Guid.NewGuid(),
+                    Version = 2,
+                    OrderNumber = "123456",
+                    Status = "InProgressed"
+                };
+                
+                var orderInTransitted = new InTransitted()
+                {
+                    Id = Guid.NewGuid(),
+                    Version = 3,
+                    OrderNumber = "132456",
+                    Status = "InTransitted"
+                };
+                
+                var orderDelivered = new Delivered()
+                {
+                    Id = Guid.NewGuid(),
+                    Version = 4,
+                    OrderNumber = "123456",
+                    Status = "Delivered"
+                };
+                
+                await context.MessageBrokerService.Publish(orderCreated, Guid.NewGuid());
+                context.Logger.LogInformation($"Event Published, OrderNumber:{orderCreated.OrderNumber} ");
+
+                await context.MessageBrokerService.Publish(orderInProgressed, Guid.NewGuid());
+                context.Logger.LogInformation($"Event Published, OrderNumber:{orderInProgressed.OrderNumber} ");
+                
+                await context.MessageBrokerService.Publish(orderInTransitted, Guid.NewGuid());
+                context.Logger.LogInformation($"Event Published, OrderNumber:{orderInTransitted.OrderNumber} ");
+                
                 
                 await context.MessageBrokerService.Publish(orderDelivered, Guid.NewGuid());
                 context.Logger.LogInformation($"Event Published, OrderNumber:{orderDelivered.OrderNumber} ");
-
+                
                 i++;
             }
             catch (Exception e)
@@ -55,8 +89,6 @@ public class Worker : BackgroundService
                 //context.Logger.LogError(e.Message, e);
             }
         }
-        
-        
-           
+     
     }
 }

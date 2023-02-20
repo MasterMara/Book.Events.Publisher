@@ -1,7 +1,7 @@
 ﻿
 namespace Order.Events.V1.Order;
 
-public class Created 
+public class InProgressed 
 {
     public Guid Id { get; set; }
     public int Version { get; set; }
