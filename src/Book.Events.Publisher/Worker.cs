@@ -43,7 +43,17 @@ public class Worker : BackgroundService
 
         try
         {
-            await context.MessageBrokerService.Publish(printed, Guid.NewGuid());
+            await context.MessageBrokerService.Publish(deleted, Guid.NewGuid());
+            context.Logger.LogInformation($"Event Published, OrderNumber:{placed.BookNumber} ");
+        }
+        catch (Exception e)
+        {
+            //context.Logger.LogError(e.Message, e);
+        }
+        
+        try
+        {
+            await context.MessageBrokerService.Publish(published, Guid.NewGuid());
             context.Logger.LogInformation($"Event Published, OrderNumber:{placed.BookNumber} ");
         }
         catch (Exception e)
