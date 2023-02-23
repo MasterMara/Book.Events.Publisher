@@ -1,16 +1,16 @@
-﻿using MassTransit;
+﻿using Book.Events.Publisher.Logging;
+using Book.Events.Publisher.Services;
+using Book.Events.Publisher.Settings;
+using Book.Events.Publisher.Settings.BusSettings;
+using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Book.Events.V1.Book;
-using Order.Events.Publisher.Logging;
-using Order.Events.Publisher.Services;
-using Order.Events.Publisher.Settings;
-using Order.Events.Publisher.Settings.BusSettings;
 using ExchangeType = RabbitMQ.Client.ExchangeType;
 
-namespace Order.Events.Publisher;
+namespace Book.Events.Publisher;
 
 public static class Program
 {

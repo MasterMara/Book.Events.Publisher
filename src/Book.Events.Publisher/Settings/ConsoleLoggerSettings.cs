@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Order.Events.Publisher.Settings;
+namespace Book.Events.Publisher.Settings;
 
 public class ConsoleLoggerSettings
 {

@@ -1,7 +1,7 @@
-﻿using Order.Events.Publisher.Logging;
-using Order.Events.Publisher.Services;
+﻿using Book.Events.Publisher.Logging;
+using Book.Events.Publisher.Services;
 
-namespace Order.Events.Publisher;
+namespace Book.Events.Publisher;
 
 public interface IContext
 {

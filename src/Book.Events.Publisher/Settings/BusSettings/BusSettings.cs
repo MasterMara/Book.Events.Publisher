@@ -1,4 +1,4 @@
-﻿namespace Order.Events.Publisher.Settings.BusSettings;
+﻿namespace Book.Events.Publisher.Settings.BusSettings;
 
 public class BusSettings : IBusSettings
 {

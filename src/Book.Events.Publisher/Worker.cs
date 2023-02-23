@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Book.Events.Publisher.Logging;
+using Book.Events.Publisher.Services;
+using Microsoft.Extensions.Hosting;
 using Book.Events.V1.Book;
-using Order.Events.Publisher.Logging;
-using Order.Events.Publisher.Services;
 
-namespace Order.Events.Publisher;
+namespace Book.Events.Publisher;
 
 public class Worker : BackgroundService
 {

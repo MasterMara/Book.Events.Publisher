@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Net;
+using Book.Events.Publisher.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Order.Events.Publisher.Settings;
 
-namespace Order.Events.Publisher.Logging;
+namespace Book.Events.Publisher.Logging;
 
 public class ConsoleLogger : IConsoleLogger
 {

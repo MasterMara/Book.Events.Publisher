@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Microsoft.Extensions.Logging;
 
-namespace Order.Events.Publisher.Logging;
+namespace Book.Events.Publisher.Logging;
 
 public interface IConsoleLogger
 {

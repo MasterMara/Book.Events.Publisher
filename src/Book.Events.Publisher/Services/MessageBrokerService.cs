@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 
-namespace Order.Events.Publisher.Services;
+namespace Book.Events.Publisher.Services;
 
 public class MessageBrokerService : IMessageBrokerService
 {
