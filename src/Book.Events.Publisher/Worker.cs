@@ -1,5 +1,6 @@
 ﻿using Book.Events.Common;
 using Book.Events.Publisher.Logging;
+using Book.Events.Publisher.SeedData;
 using Book.Events.Publisher.Services;
 using Microsoft.Extensions.Hosting;
 using Book.Events.V1.Book;
@@ -38,25 +39,20 @@ public class Worker : BackgroundService
 
         try
         {
-            var bookCreated = new Created
-            {
-                Id = "1",
-                BookNumber = "123456",
-                BookName = "Outliers",
-                Writer = new Writer
-                {
-                    Id = "10",
-                    Name = "Mustafa KARACABEY"
-                },
-                TotalAmount = new Money
-                {
-                    CurrencyCode = 949,
-                    Value = 100
-                }
-            };
-
-            await context.MessageBrokerService.Publish(bookCreated, Guid.NewGuid());
-            context.Logger.LogInformation($"Event Published, OrderNumber:{bookCreated.BookNumber} ");
+            var created = BookEventPublisher.PublishCreatedEvent();
+            var placed = BookEventPublisher.PublishPlacedEvent();
+            var printed = BookEventPublisher.PublishPrintedEvent();
+            var published = BookEventPublisher.PublishPublishedEvent();
+            var deleted = BookEventPublisher.PublishDeletedEvent();
+            
+            
+            
+            
+            await context.MessageBrokerService.Publish(created, Guid.NewGuid());
+            context.Logger.LogInformation($"Event Published, OrderNumber:{created.BookNumber} ");
+            
+         
+            
         }
         catch (Exception e)
         {
