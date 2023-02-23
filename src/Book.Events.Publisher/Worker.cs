@@ -1,7 +1,9 @@
-﻿using Book.Events.Publisher.Logging;
+﻿using Book.Events.Common;
+using Book.Events.Publisher.Logging;
 using Book.Events.Publisher.Services;
 using Microsoft.Extensions.Hosting;
 using Book.Events.V1.Book;
+using Book.Events.V1.Book.Props;
 
 namespace Book.Events.Publisher;
 
@@ -33,24 +35,32 @@ public class Worker : BackgroundService
 
         var i = 0;
 
-        while (i < 1)
+
+        try
         {
-            try
+            var bookCreated = new Created
             {
-                var bookCreated = new Created
+                Id = "1",
+                BookNumber = "123456",
+                BookName = "Outliers",
+                Writer = new Writer
                 {
-                    BookNumber = "123456"
-                };
+                    Id = "10",
+                    Name = "Mustafa KARACABEY"
+                },
+                TotalAmount = new Money
+                {
+                    CurrencyCode = 949,
+                    Value = 100
+                }
+            };
 
-                await context.MessageBrokerService.Publish(bookCreated, Guid.NewGuid());
-                context.Logger.LogInformation($"Event Published, OrderNumber:{bookCreated.BookNumber} ");
-
-                i++;
-            }
-            catch (Exception e)
-            {
-                //context.Logger.LogError(e.Message, e);
-            }
+            await context.MessageBrokerService.Publish(bookCreated, Guid.NewGuid());
+            context.Logger.LogInformation($"Event Published, OrderNumber:{bookCreated.BookNumber} ");
+        }
+        catch (Exception e)
+        {
+            //context.Logger.LogError(e.Message, e);
         }
     }
 }
