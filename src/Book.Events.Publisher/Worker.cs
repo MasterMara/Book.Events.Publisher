@@ -34,29 +34,22 @@ public class Worker : BackgroundService
     {
         if (!(c is IContext context)) return;
 
-        var i = 0;
 
+        var created = BookEventPublisher.PublishCreatedEvent();
+        var placed = BookEventPublisher.PublishPlacedEvent();
+        var printed = BookEventPublisher.PublishPrintedEvent();
+        var published = BookEventPublisher.PublishPublishedEvent();
+        var deleted = BookEventPublisher.PublishDeletedEvent();
 
         try
         {
-            var created = BookEventPublisher.PublishCreatedEvent();
-            var placed = BookEventPublisher.PublishPlacedEvent();
-            var printed = BookEventPublisher.PublishPrintedEvent();
-            var published = BookEventPublisher.PublishPublishedEvent();
-            var deleted = BookEventPublisher.PublishDeletedEvent();
-            
-            
-            
-            
-            await context.MessageBrokerService.Publish(created, Guid.NewGuid());
-            context.Logger.LogInformation($"Event Published, OrderNumber:{created.BookNumber} ");
-            
-         
-            
+            await context.MessageBrokerService.Publish(printed, Guid.NewGuid());
+            context.Logger.LogInformation($"Event Published, OrderNumber:{placed.BookNumber} ");
         }
         catch (Exception e)
         {
             //context.Logger.LogError(e.Message, e);
         }
+        
     }
 }

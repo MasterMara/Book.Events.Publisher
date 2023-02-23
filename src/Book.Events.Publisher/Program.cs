@@ -51,7 +51,7 @@ public static class Program
                             });
                         });
 
-                        ConfigureOrderLineExchanges(factoryConfigurator);
+                        ConfigureBookExchanges(factoryConfigurator);
                     });
                 }));
 
@@ -63,13 +63,45 @@ public static class Program
     }
 
 
-    private static void ConfigureOrderLineExchanges(IRabbitMqBusFactoryConfigurator cfg)
+    private static void ConfigureBookExchanges(IRabbitMqBusFactoryConfigurator cfg)
     {
         #region Events.V1.Book:Created
 
         cfg.Send<Created>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
 
         cfg.Publish<Created>(x => x.ExchangeType = ExchangeType.Topic);
+
+        #endregion
+        
+        #region Events.V1.Book:Placed
+
+        cfg.Send<Placed>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
+
+        cfg.Publish<Placed>(x => x.ExchangeType = ExchangeType.Topic);
+
+        #endregion
+        
+        #region Events.V1.Book:Printed
+
+        cfg.Send<Printed>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
+
+        cfg.Publish<Printed>(x => x.ExchangeType = ExchangeType.Topic);
+
+        #endregion
+        
+        #region Events.V1.Book:Published
+
+        cfg.Send<Published>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
+
+        cfg.Publish<Published>(x => x.ExchangeType = ExchangeType.Topic);
+
+        #endregion
+        
+        #region Events.V1.Book:Deleted
+
+        cfg.Send<Deleted>(x => { x.UseRoutingKeyFormatter(c => RoutingKeyFormat()); });
+
+        cfg.Publish<Deleted>(x => x.ExchangeType = ExchangeType.Topic);
 
         #endregion
     }
