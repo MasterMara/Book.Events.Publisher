@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
+using Book.Events.V1.Book;
 using Order.Events.Publisher.Logging;
 using Order.Events.Publisher.Services;
-using Order.Events.V1.Order;
 
 namespace Order.Events.Publisher;
 
@@ -37,51 +37,14 @@ public class Worker : BackgroundService
         {
             try
             {
-                var orderCreated = new Created
+                var bookCreated = new Created
                 {
-                    Id = Guid.NewGuid(),
-                    Version = 1,
-                    OrderNumber = "123456",
-                    Status = "Created"
+                    BookNumber = "123456"
                 };
-                
-                var orderInProgressed = new InProgressed()
-                {
-                    Id = Guid.NewGuid(),
-                    Version = 2,
-                    OrderNumber = "123456",
-                    Status = "InProgressed"
-                };
-                
-                var orderInTransitted = new InTransitted()
-                {
-                    Id = Guid.NewGuid(),
-                    Version = 3,
-                    OrderNumber = "132456",
-                    Status = "InTransitted"
-                };
-                
-                var orderDelivered = new Delivered()
-                {
-                    Id = Guid.NewGuid(),
-                    Version = 4,
-                    OrderNumber = "123456",
-                    Status = "Delivered"
-                };
-                
-                await context.MessageBrokerService.Publish(orderCreated, Guid.NewGuid());
-                context.Logger.LogInformation($"Event Published, OrderNumber:{orderCreated.OrderNumber} ");
 
-                await context.MessageBrokerService.Publish(orderInProgressed, Guid.NewGuid());
-                context.Logger.LogInformation($"Event Published, OrderNumber:{orderInProgressed.OrderNumber} ");
-                
-                await context.MessageBrokerService.Publish(orderInTransitted, Guid.NewGuid());
-                context.Logger.LogInformation($"Event Published, OrderNumber:{orderInTransitted.OrderNumber} ");
-                
-                
-                await context.MessageBrokerService.Publish(orderDelivered, Guid.NewGuid());
-                context.Logger.LogInformation($"Event Published, OrderNumber:{orderDelivered.OrderNumber} ");
-                
+                await context.MessageBrokerService.Publish(bookCreated, Guid.NewGuid());
+                context.Logger.LogInformation($"Event Published, OrderNumber:{bookCreated.BookNumber} ");
+
                 i++;
             }
             catch (Exception e)
@@ -89,6 +52,5 @@ public class Worker : BackgroundService
                 //context.Logger.LogError(e.Message, e);
             }
         }
-     
     }
 }

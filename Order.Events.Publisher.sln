@@ -4,7 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DAA22FF5-E21
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Events.Publisher", "src\Order.Events.Publisher\Order.Events.Publisher.csproj", "{69D7F3FA-7506-428C-B14D-A106000C057A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Events", "src\Order.Events\Order.Events.csproj", "{E7D30EFE-EAF2-4D0B-AAB3-5FD416037E76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book.Events", "src\Book.Events\Book.Events.csproj", "{E7D30EFE-EAF2-4D0B-AAB3-5FD416037E76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

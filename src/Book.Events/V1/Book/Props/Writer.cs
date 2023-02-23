@@ -1,6 +1,6 @@
-﻿namespace Order.Events.V1.Order.Props;
+﻿namespace Book.Events.V1.Book.Props;
 
-public class CargoCompany
+public class Writer
 {
     public string Id { get; set; }
     public string Name { get; set; }
